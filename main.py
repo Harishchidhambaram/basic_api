@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing  import Optional
+#To declare the request body we importing the pydantic
 from pydantic import BaseModel
 app = FastAPI()
 
@@ -18,6 +19,7 @@ def unpublished():
 @app.get('/blog/{id}')
 def show(id: int):
     return {'data':{'id':id}}
+    
  
 
 @app.get('/blog/{id}/comments')
@@ -31,6 +33,7 @@ def index(limit=10, published: bool = True, sort: Optional[str] = None):
         return {'data': f'{limit} published blogs from the db'}
     else:
         return {'data': f'{limit} blogs from the db'} 
+
 #Post
 class Blog(BaseModel):
     title: str
@@ -40,3 +43,8 @@ class Blog(BaseModel):
 def create_blog(request: Blog):
     return request
     return {'data' : "Blog is created"}
+
+#Debug fastapi application
+#@app.post('/blog')
+#def create_blog(blog: Blog):
+    #return {'data': f"Blog is created with title as {blog.title}"}
